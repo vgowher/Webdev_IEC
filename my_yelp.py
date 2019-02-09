@@ -1,45 +1,32 @@
-<<<<<<< HEAD
-import requests
+#Maintainer Qamber Mehdi
+# Created on August 25, 2018
 
-api_key = "dthgc1Y5q1UhFvbrCma-C8ip0Q4o-moHUm9EvCwdcj9VvsO19JEQIl4bY3kGyDBUJOYJyPsxPXbUv1jxhCyrFj298L7okeLfgxvpuWNUiO6iaXmQ0Db8SuzoZQdfXHYx"
+import requests, json
 
-url = "https://api.yelp.com/v3/businesses/search"
+def search_businesses(search_term, search_location):
 
-my_headers = {
-    "Authorization": "Bearer %s" % api_key
-}
+    api_key = "dthgc1Y5q1UhFvbrCma-C8ip0Q4o-moHUm9EvCwdcj9VvsO19JEQIl4bY3kGyDBUJOYJyPsxPXbUv1jxhCyrFj298L7okeLfgxvpuWNUiO6iaXmQ0Db8SuzoZQdfXHYx"
 
-my_params = {
-    "term": "restaurants",
-    "location": "chicago",
-    "limit": 3,
-}
+    url = "https://api.yelp.com/v3/businesses/search"
 
-businesses_object = requests.get(url, headers=my_headers, params=my_params)
+    my_headers = {
+        "Authorization": "Bearer %s" % api_key
+    }
 
-businesses_dict = businesses_object.text
+    my_params = {
+        "term": search_term,
+        "location": search_location,
+        "limit": 3,
+    }
 
-print(businesses_dict)
-=======
-import requests
+    businesses_object = requests.get(url, headers=my_headers, params=my_params)
 
-api_key = "dthgc1Y5q1UhFvbrCma-C8ip0Q4o-moHUm9EvCwdcj9VvsO19JEQIl4bY3kGyDBUJOYJyPsxPXbUv1jxhCyrFj298L7okeLfgxvpuWNUiO6iaXmQ0Db8SuzoZQdfXHYx"
+    businesses_dict = json.loads(businesses_object.text)
 
-url = "https://api.yelp.com/v3/businesses/search"
+    businesses_list = businesses_dict['businesses']
 
-my_headers = {
-    "Authorization": "Bearer %s" % api_key
-}
-
-my_params = {
-    "term": "restaurants",
-    "location": "chicago",
-    "limit": 3,
-}
-
-businesses_object = requests.get(url, headers=my_headers, params=my_params)
-
-businesses_dict = businesses_object.text
-
-print(businesses_dict)
->>>>>>> 0dfa9ec4fe87451058f4311978603dd1d5986dab
+    print(businesses_dict)
+    list_of_businesses = []
+    for each in businesses_list:
+        list_of_businesses.append(each)
+    return list_of_businesses
